@@ -1,5 +1,5 @@
-const fetchItem = () => {
-  // seu código aq
+const fetchItem = async () => {
+
 };
 
 if (typeof module !== 'undefined') {
