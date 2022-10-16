@@ -15,7 +15,7 @@ describe('1 - Teste a função fetchProducts', () => {
   });
 
   it('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro', () => {
-    expect(fetchProducts('')).toThrow;
+    expect(fetchProducts('')).toThrow();
   });
 
 });

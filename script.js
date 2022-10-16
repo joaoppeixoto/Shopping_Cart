@@ -1,4 +1,7 @@
+/// const { fetchItem } = require("./helpers/fetchItem");
+
 const getItem = document.querySelector('.items');
+const getId = document.querySelector('.cart__items');
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
@@ -80,6 +83,13 @@ const createCartItemElement = ({ id, title, price }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+// const requestProduct = async () => {
+//   const request = await fetchItem('MLB1341706310');
+//  console.log(request);
+
+//   getId.appendChild(createCartItemElement(product));
+//   };
 
 window.onload = () => { 
   renderCreateProduct(); 
