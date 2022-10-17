@@ -41,6 +41,7 @@ const createCustomElement = (element, className, innerText) => {
  * @param {string} product.thumbnail - URL da imagem do produto.
  * @returns {Element} Elemento de produto.
  */
+
 const createProductItemElement = ({ id, title, thumbnail }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -49,14 +50,22 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const btnGetId = document.querySelectorAll('.item__add');
+  btnGetId.forEach((btn) => btn.addEventListener('click', createCartItem));
   return section;
 };
+const createCartItem = async (event) => {
+  const nodeSon = event.target.parentNode;
+  const firstId = nodeSon.firstChild.innerText;
+   const request = await fetchItem(firstId);  
+
+  getId.appendChild(createCartItemElement(request));
+  };
 
 const renderCreateProduct = async () => {
   const render = await fetchProducts('computador');
   render.results.forEach((product) => {
-    console.log(product);
+    // console.log(product);
     getItem.appendChild(createProductItemElement(product));
   });
 };
@@ -76,6 +85,10 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
+const cartItemClickListener = (event) => {
+  event.target.remove();
+};
+
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -83,13 +96,6 @@ const createCartItemElement = ({ id, title, price }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
-// const requestProduct = async () => {
-//   const request = await fetchItem('MLB1341706310');
-//  console.log(request);
-
-//   getId.appendChild(createCartItemElement(product));
-//   };
 
 window.onload = () => { 
   renderCreateProduct(); 

@@ -1,5 +1,5 @@
-const fetchItem = async () => {
-  const requestUrl = await fetch('https://api.mercadolibre.com/items/MLB1341706310');
+const fetchItem = async (ItemId) => {
+  const requestUrl = await fetch(`https://api.mercadolibre.com/items/${ItemId}`);
   const response = await requestUrl.json();
   return response;
 };
@@ -9,4 +9,4 @@ if (typeof module !== 'undefined') {
     fetchItem,
   };
 }
-fetchItem();
+// fetchItem('MLB1341706310');
