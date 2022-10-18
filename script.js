@@ -1,5 +1,7 @@
 /// const { fetchItem } = require("./helpers/fetchItem");
 
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
 const getItem = document.querySelector('.items');
 const getId = document.querySelector('.cart__items');
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
@@ -19,10 +21,26 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
+const saveLocalStorage = () => {
+  let arrayCart = [];
+  const getCartItem = document.querySelectorAll('.cart__item');
+  getCartItem.forEach((param) => arrayCart.push(param.innerText));
+  saveCartItems(arrayCart);
+  arrayCart = [];
+};
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveLocalStorage();
 };
+
+const clearbtn = document.querySelector('.empty-cart');
+clearbtn.addEventListener('click', () => {
+const cItems = document.querySelector('.cart__items');
+cItems.innerHTML = '';
+saveLocalStorage();
+});
+
 /**
  * Função responsável por criar e retornar qualquer elemento.
  * @param {string} element - Nome do elemento a ser criado.
@@ -56,9 +74,10 @@ const createCustomElement = (element, className, innerText) => {
 const createCartItem = async (event) => {
   const nodeSon = event.target.parentNode;
   const firstId = nodeSon.firstChild.innerText;
-   const request = await fetchItem(firstId);  
+  const request = await fetchItem(firstId);  
 
   getId.appendChild(createCartItemElement(request));
+  saveLocalStorage();
   };
 
 const createProductItemElement = ({ id, title, thumbnail }) => {
@@ -71,14 +90,13 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const btnGetId = document.querySelectorAll('.item__add');
   btnGetId.forEach((btn) => btn.addEventListener('click', createCartItem));
+
   return section;
 };
-
 
 const renderCreateProduct = async () => {
   const render = await fetchProducts('computador');
   render.results.forEach((product) => {
-    // console.log(product);
     getItem.appendChild(createProductItemElement(product));
   });
 };
