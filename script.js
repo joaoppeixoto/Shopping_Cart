@@ -119,4 +119,5 @@ const renderCreateProduct = async () => {
 
 window.onload = () => { 
   renderCreateProduct(); 
+  getSavedCartItems();
 };
