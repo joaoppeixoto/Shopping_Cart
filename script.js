@@ -1,8 +1,6 @@
 /// const { fetchItem } = require("./helpers/fetchItem");
 const getCartItem = document.querySelectorAll('.cart__item');
 
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
-
 const getItem = document.querySelector('.items');
 const getId = document.querySelector('.cart__items');
 const loading = document.querySelector('.loading');
@@ -34,6 +32,16 @@ const cartItemClickListener = (event) => {
   event.target.remove();
   saveLocalStorage();
 };
+
+const getLocalstorage = (param) => {
+  param.forEach((element) => {
+    const li = document.createElement('li');
+    li.className = 'cart__items';
+    li.innerText = element;
+    li.addEventListener('click', cartItemClickListener);
+    getId.appendChild(li);
+  });
+  };
 
 const clearbtn = document.querySelector('.empty-cart');
 clearbtn.addEventListener('click', () => {
@@ -119,17 +127,7 @@ const renderCreateProduct = async () => {
  * @returns {Element} Elemento de um item do carrinho.
  */
 
- const getLocalstorage = (param) => {
-  param.forEach((element) => {
-    const li = document.createElement('li');
-    li.className = 'cart__items';
-    li.innerText = element;
-    li.addEventListener('click', cartItemClickListener);
-    getId.appendChild(li);
-  });
-  };
-
 window.onload = () => { 
   renderCreateProduct(); 
-  getLocalstorage(JSON.parse(getSavedCartItems('cartItems')));
+  // getLocalstorage(JSON.parse(getSavedCartItems('cartItems')));
 };
