@@ -1,9 +1,11 @@
 /// const { fetchItem } = require("./helpers/fetchItem");
+const getCartItem = document.querySelectorAll('.cart__item');
 
 // const getSavedCartItems = require("./helpers/getSavedCartItems");
 
 const getItem = document.querySelector('.items');
 const getId = document.querySelector('.cart__items');
+const loading = document.querySelector('.loading');
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
@@ -23,9 +25,8 @@ const createProductImageElement = (imageSource) => {
 };
 const saveLocalStorage = () => {
   let arrayCart = [];
-  const getCartItem = document.querySelectorAll('.cart__item');
   getCartItem.forEach((param) => arrayCart.push(param.innerText));
-  saveCartItems(arrayCart);
+  saveCartItems(JSON.stringify(arrayCart));
   arrayCart = [];
 };
 
@@ -99,6 +100,7 @@ const renderCreateProduct = async () => {
   render.results.forEach((product) => {
     getItem.appendChild(createProductItemElement(product));
   });
+  loading.remove();
 };
 
 /**
@@ -117,7 +119,17 @@ const renderCreateProduct = async () => {
  * @returns {Element} Elemento de um item do carrinho.
  */
 
+ const getLocalstorage = (param) => {
+  param.forEach((element) => {
+    const li = document.createElement('li');
+    li.className = 'cart__items';
+    li.innerText = element;
+    li.addEventListener('click', cartItemClickListener);
+    getId.appendChild(li);
+  });
+  };
+
 window.onload = () => { 
   renderCreateProduct(); 
-  getSavedCartItems();
+  getLocalstorage(JSON.parse(getSavedCartItems('cartItems')));
 };

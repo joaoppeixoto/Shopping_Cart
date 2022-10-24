@@ -1,6 +1,6 @@
 const saveCartItems = (param) => {
 const localKey = 'cartItems';
-localStorage.setItem(localKey, (param));
+localStorage.setItem(localKey, param);
 };
 
 if (typeof module !== 'undefined') {
